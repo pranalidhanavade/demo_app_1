@@ -1,27 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { initKeycloak } from "../app/lib/keycloak";
 
-export default function Home() {
+export default function Dashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{ username?: string }>({});
   const [keycloakInstance, setKeycloakInstance] = useState<any>(null);
 
-  useEffect(() => {
-    const initializeAuth = async () => {
-      const keycloak = await initKeycloak();
-      setKeycloakInstance(keycloak);
-
-      if (keycloak?.authenticated) {
-        setIsAuthenticated(true);
-        setUser({ username: keycloak.tokenParsed?.preferred_username });
-      } else {
-        keycloak?.login(); // Ensure login is only called after initialization
-      }
-    };
-
-    initializeAuth();
-  }, []);
 
   const logout = () => {
     if (keycloakInstance) {
@@ -39,7 +23,7 @@ export default function Home() {
       ) : (
         // <p>❌ Not logged in</p>
         // If not authenticated, redirect to 4321's login
-        window.location.href = "http://192.168.1.125:4321/login"
+        window.location.href = "http://192.168.1.121:4321/login"
       )}
     </div>
   );
